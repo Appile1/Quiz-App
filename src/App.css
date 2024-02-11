@@ -1,0 +1,35 @@
+.start {
+  width: 700px;
+  background-color: whitesmoke;
+  height: 800px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+body {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  background-color: blacks;
+}
+.start h1 {
+  font-size: 4em;
+}
+.start p {
+  font-size: 2.5em;
+}
+.start button {
+  padding: 0.5em 1em;
+  font-weight: bold;
+  margin-top: 2em;
+  width: 200px;
+  font-size: 1em;
+}
+
+.mcqs {
+  min-width: 200px;
+  width: 600px;
+  max-height: 300px;
+  min-width: 200px;
+}
