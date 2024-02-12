@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useId } from "react";
 import { decode } from "html-entities";
 
 export default function Question(props) {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [score, setScore] = useState(0);
   const [showAnswer, setshowAnswer] = useState(false);
+  const [check, setCheck] = useState(true);
 
   const handleAnswerSelect = (question, selectedAnswer) => {
     setSelectedAnswers((prevSelected) => ({
@@ -22,6 +23,7 @@ export default function Question(props) {
       }
 
       setshowAnswer(true);
+      setCheck(false);
     });
   };
 
@@ -39,16 +41,17 @@ export default function Question(props) {
                 .AddAnswerArray(x.incorrect_answers, x.correct_answer)
                 .map((answer, idx) => {
                   const Answers = decode(answer);
+                  const Id = useId();
                   return (
                     <div key={idx} className=" radio-button ">
                       <input
                         type="radio"
                         name={x.question}
                         value={Answers}
-                        id={Answers}
+                        id={Id}
                         onChange={() => handleAnswerSelect(x.question, answer)}
                       />
-                      <label htmlFor={Answers}>{Answers}</label>
+                      <label htmlFor={Id}>{Answers}</label>
                     </div>
                   );
                 })}
@@ -56,13 +59,19 @@ export default function Question(props) {
           </div>
         );
       })}
-      {showAnswer && <p>5 / {score}</p>}
-      <button className="check" onClick={AnswerCheck}>
-        Check Answers
-      </button>
-      <button onClick={props.fetchData} className="New Test">
-        New Test
-      </button>
+      {showAnswer && (
+        <div className="result">
+          <p className="score">You scored {score}/5 correct answers</p>
+          <button onClick={props.fetchData} className="New Test">
+            Play Again
+          </button>
+        </div>
+      )}
+      {check && (
+        <button className="check" onClick={AnswerCheck}>
+          Check Answers
+        </button>
+      )}
     </div>
   );
 }
