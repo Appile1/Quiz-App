@@ -19,8 +19,25 @@ export default function Question(props) {
     props.data.forEach((question) => {
       const selectedAnswer = selectedAnswers[question.question];
       const correctAnswer = question.correct_answer;
+
       if (selectedAnswer === correctAnswer) {
         setScore((prev) => prev + 1);
+        if (selectedAnswer) {
+          document
+            .getElementById(selectedAnswer)
+            .classList.add("correct-answer");
+        }
+      } else {
+        if (selectedAnswer) {
+          document
+            .getElementById(selectedAnswer)
+            .classList.add("incorrect-answer");
+        }
+      }
+
+      const correctAnswerElement = document.getElementById(correctAnswer);
+      if (correctAnswerElement) {
+        correctAnswerElement.classList.add("correct-answer");
       }
 
       setShowAnswer(true);
@@ -45,7 +62,7 @@ export default function Question(props) {
                   const Answers = decode(answer);
                   const Id = useId();
                   return (
-                    <div key={idx} className=" radio-button ">
+                    <div key={Id} className=" radio-button " id={answer}>
                       <input
                         type="radio"
                         name={x.question}
@@ -64,7 +81,23 @@ export default function Question(props) {
       {showAnswer && (
         <div className="result">
           <p className="score">You scored {score}/5 correct answers</p>
-          <button onClick={props.fetchData} className="New Test">
+          <button
+            onClick={() => {
+              props.fetchData();
+              setSelectedAnswers({});
+              setScore(0);
+              setShowAnswer(false);
+              setCheck(true);
+
+              // Uncheck all radio inputs
+              document
+                .querySelectorAll('input[type="radio"]')
+                .forEach((radio) => {
+                  radio.checked = false;
+                });
+            }}
+            className="New Test"
+          >
             Play Again
           </button>
         </div>
