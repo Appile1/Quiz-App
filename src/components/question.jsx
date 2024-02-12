@@ -4,8 +4,9 @@ import { decode } from "html-entities";
 export default function Question(props) {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [score, setScore] = useState(0);
-  const [showAnswer, setshowAnswer] = useState(false);
+  const [showAnswer, setShowAnswer] = useState(false);
   const [check, setCheck] = useState(true);
+  const [correct, setCorrect] = useState(false);
 
   const handleAnswerSelect = (question, selectedAnswer) => {
     setSelectedAnswers((prevSelected) => ({
@@ -22,13 +23,14 @@ export default function Question(props) {
         setScore((prev) => prev + 1);
       }
 
-      setshowAnswer(true);
+      setShowAnswer(true);
       setCheck(false);
     });
   };
 
   return (
     <div className="start background-container">
+      <h2 className="quiz">Quiz</h2>
       {props.data.map((x, index) => {
         const Answer = x.correct_answer;
         const Question = decode(x.question);
