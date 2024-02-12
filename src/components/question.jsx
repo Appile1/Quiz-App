@@ -1,26 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
+import { decode } from "html-entities";
 
 export default function Question(props) {
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [score, setScore] = useState(0);
+
+  const handleAnswerSelect = (question, selectedAnswer) => {
+    setSelectedAnswers((prevSelected) => ({
+      ...prevSelected,
+      [question]: selectedAnswer,
+    }));
+  };
+
+  const AnswerCheck = () => {
+    props.data.forEach((question) => {
+      const selectedAnswer = selectedAnswers[question.question];
+      const correctAnswer = question.correct_answer;
+      if (selectedAnswer === correctAnswer) {
+        setScore((prev) => prev + 1);
+      }
+    });
+  };
+
   return (
-    <>
-      <div className="start">
-        {props.data.map((x, index) => (
+    <div className="start background-container">
+      {props.data.map((x, index) => {
+        const Answer = x.correct_answer;
+        const Question = decode(x.question);
+
+        return (
           <div key={index} className="mcqs">
-            <h2>{x.question}</h2>
-            {props
-              .AnswerArray(x.incorrect_answers, x.correct_answer)
-              .map((answer, idx) => (
-                <div key={idx} className="radio">
-                  <input type="radio" name={x.question} value={answer} />
-                  <label>{answer}</label>
-                </div>
-              ))}
+            <h2>{Question}</h2>
+            <div className="options">
+              {props
+                .AddAnswerArray(x.incorrect_answers, x.correct_answer)
+                .map((answer, idx) => {
+                  const Answers = decode(answer);
+                  return (
+                    <div key={idx} className=" radio-button ">
+                      <input
+                        type="radio"
+                        name={x.question}
+                        value={Answers}
+                        id={Answers}
+                        onChange={() => handleAnswerSelect(x.question, answer)}
+                      />
+                      <label htmlFor={Answers}>{Answers}</label>
+                    </div>
+                  );
+                })}
+            </div>
           </div>
-        ))}
-        <button onClick={props.fetchData} className="New Test">
-          New Test
-        </button>
-      </div>
-    </>
+        );
+      })}
+      <p>5 / {score}</p>
+      <button className="check" onClick={AnswerCheck}>
+        Check Answers
+      </button>
+      <button onClick={props.fetchData} className="New Test">
+        New Test
+      </button>
+    </div>
   );
 }

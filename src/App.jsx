@@ -14,16 +14,24 @@ export default function App() {
     setFirst(false);
   }
 
-  function AnswerArray(arr, x) {
-    arr.splice(((arr.length + 1) * Math.random()) | 0, 0, x);
-    return arr;
+  function AddAnswerArray(arr, x) {
+    if (arr.includes(x)) {
+      return arr;
+    } else {
+      arr.splice(((arr.length + 1) * Math.random()) | 0, 0, x);
+      return arr;
+    }
   }
 
   return (
     <>
       {first && <Basic fetchData={fetchData} />}
       {!first && (
-        <Question data={data} fetchData={fetchData} AnswerArray={AnswerArray} />
+        <Question
+          data={data}
+          fetchData={fetchData}
+          AddAnswerArray={AddAnswerArray}
+        />
       )}
     </>
   );

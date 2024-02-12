@@ -1,7 +1,7 @@
 .start {
-  width: 700px;
+  width: 800px;
   background-color: whitesmoke;
-  height: 800px;
+  height: 900px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -29,7 +29,40 @@ body {
 
 .mcqs {
   min-width: 200px;
-  width: 600px;
-  max-height: 300px;
-  min-width: 200px;
+  width: 700px;
+  max-height: 200px;
+  min-height: 100px;
+}
+.options {
+  display: flex;
+  column-gap: 10px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.mcqs h2 {
+  font-size: 1.3em;
+}
+
+.radio-button {
+  display: inline-block;
+  margin: 5px;
+}
+
+.radio-button input {
+  display: none;
+}
+
+.radio-button label {
+  display: block;
+  padding: 10px;
+  background-color: gray;
+  color: #fff;
+  border: 1px solid #2980b9;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.radio-button input:checked + label {
+  background-color: black;
 }
