@@ -4,6 +4,7 @@ import { decode } from "html-entities";
 export default function Question(props) {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [score, setScore] = useState(0);
+  const [showAnswer, setshowAnswer] = useState(false);
 
   const handleAnswerSelect = (question, selectedAnswer) => {
     setSelectedAnswers((prevSelected) => ({
@@ -19,6 +20,8 @@ export default function Question(props) {
       if (selectedAnswer === correctAnswer) {
         setScore((prev) => prev + 1);
       }
+
+      setshowAnswer(true);
     });
   };
 
@@ -53,7 +56,7 @@ export default function Question(props) {
           </div>
         );
       })}
-      <p>5 / {score}</p>
+      {showAnswer && <p>5 / {score}</p>}
       <button className="check" onClick={AnswerCheck}>
         Check Answers
       </button>
