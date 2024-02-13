@@ -8,7 +8,9 @@ export default function App() {
   const [data, setData] = useState([]);
 
   async function fetchData() {
-    let response = await fetch("https://opentdb.com/api.php?amount=5");
+    let response = await fetch(
+      "https://opentdb.com/api.php?amount=5&type=multiple"
+    );
     let data = await response.json();
     setData(data.results);
     setFirst(false);

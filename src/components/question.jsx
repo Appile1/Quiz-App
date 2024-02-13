@@ -19,7 +19,6 @@ export default function Question(props) {
     props.data.forEach((question) => {
       const selectedAnswer = selectedAnswers[question.question];
       const correctAnswer = question.correct_answer;
-
       if (selectedAnswer === correctAnswer) {
         setScore((prev) => prev + 1);
         if (selectedAnswer) {
