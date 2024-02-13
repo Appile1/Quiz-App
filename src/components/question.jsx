@@ -93,6 +93,8 @@ export default function Question(props) {
                 .querySelectorAll('input[type="radio"]')
                 .forEach((radio) => {
                   radio.checked = false;
+                  radio.parentElement.classList.remove("incorrect-answer");
+                  radio.parentElement.classList.remove("correct-answer");
                 });
             }}
             className="New Test"
